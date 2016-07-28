@@ -1,0 +1,47 @@
+<div class="editor-row">
+	<div class="section gf-form-group">
+		<h5 class="section-heading">General</h5>
+		<div class="gf-form">
+			<span class="gf-form-label width-8">Index</span>
+			<input type="text" class="gf-form-input max-width-10" ng-model="ctrl.panel.index" ng-change="ctrl.refresh()" ng-model-onblur>
+		</div>
+		<div class="gf-form">
+			<span class="gf-form-label width-8">Query</span>
+			<input type="text" class="gf-form-input max-width-10" ng-model="ctrl.panel.query" ng-change="ctrl.refresh()" ng-model-onblur>
+		</div>
+		<div class="gf-form">
+			<span class="gf-form-label width-8">Mode</span>
+			<div class="gf-form-select-wrapper max-width-10">
+				<select class="gf-form-input" ng-model="ctrl.panel.mode" ng-options="v for v in ['Active','Completed','All']" ng-change="ctrl.refresh()"></select>
+			</div>
+		</div>
+	</div>
+
+	<div class="section gf-form-group">
+		<h5 class="section-heading">Table</h5>
+		<div class="gf-form">
+			<span class="gf-form-label width-8">Size</span>
+			<input type="text" class="gf-form-input max-width-10" ng-model="ctrl.panel.size" ng-change="ctrl.refresh()" ng-model-onblur>
+		</div>
+		<gf-form-switch class="gf-form" label="Scroll" label-class="width-8" checked="ctrl.panel.scroll" on-change="ctrl.render()"></gf-form-switch>
+	</div>
+</div>
+
+<div class="editor-row">
+	<div class="section gf-form-group">
+		<h5 class="section-heading">Queries</h5>
+        <div class="gf-form" ng-repeat="query in ctrl.panel.queries">
+            <input type="test" class="gf-form-input width-15" ng-model="query.name">
+            <input type="test" class="gf-form-input width-30" ng-model="query.query">
+            <label class="gf-form-label">
+                <a class="pointer" ng-click="ctrl.removeQuery(query.name)"><i class="fa fa-trash"></i></a>
+            </label>
+        </div>
+    </div>
+    <div class="gf-form gf-form--offset-1">
+        <button class="btn btn-inverse gf-form-btn" ng-click="ctrl.addQuery()">
+            <i class="fa fa-plus"></i>&nbsp;
+            Add query
+        </button>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<style>
+.job-command {
+    font-size: smaller;
+}
+</style>
+
+<p>{{ctrl.docs}} jobs. 
+<i ng-if="ctrl.docsMissing > 0" style="color:#F79520">
+    Warning: {{ctrl.docsMissing}}  jobs are not shown! Table is limited to 
+    {{ctrl.panel.size}} jobs; use 
+    <span ng-if="ctrl.panel.mode === 'Completed'"> time picker or</span>
+    filter to limit results.
+</i>
+</p>
+<div class="gf-form-query">
+    <div class="gf-form">
+        <label class="gf-form-label query-keyword">Filter</label>
+        <div class="gf-form-select-wrapper">
+            <select class="gf-form-input" ng-model="ctrl.filterQuery" ng-change="ctrl.refresh()"
+                ng-options="query.name for query in ctrl.panel.queries">
+                <option value="">-- no filter --</option>
+            </select>
+        </div>
+    </div>
+    <div class="gf-form gf-form--grow" ng-if="ctrl.filterQuery.name === '-- custom --'">
+        <input type="text" class="gf-form-input" placeholder="query"
+            ng-model="ctrl.customQuery" ng-change="ctrl.refresh()"
+            ng-model-options="{updateOn: 'default blur', debounce: {default: 500, blur: 0} }"/>
+        <label class="gf-form-label width-10"><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax">Query syntax<i class="fa fa-fw fa-external-link"></i></a></label>
+    </div>
+</div>
+
+<div class="table-panel-container">
+    <div class="table-panel-header-bg"></div>
+    <div class="table-panel-scroll">
+        <table class="table-panel-table">
+            <thead>
+                <tr>
+                    <th ng-repeat="col in ctrl.panel.columns">
+                        <div class="table-panel-table-header-inner pointer" title="{{col.title}}" 
+                            ng-click="ctrl.toggleSort(col.field)">
+                            {{col.name}}
+                            <span class="table-panel-table-header-controls" 
+                                ng-if="ctrl.panel.sortField === col.field">
+                                <i class="fa fa-caret-down" ng-show="ctrl.panel.sortOrder === 'desc'"></i>
+                                <i class="fa fa-caret-up" ng-hide="ctrl.panel.sortOrder === 'desc'"></i>
+                            </span>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+

@@ -1,0 +1,34 @@
+{
+  "type": "panel",
+  "name": "Jobs",
+  "id": "fifemon-jobs-panel",
+
+  "info": {
+    "description": "Jobs Details Table",
+    "author": {
+      "name": "Kevin Retzke",
+      "url": "https://fifemon.fnal.gov"
+    },
+    "keywords": ["fifemon", "panel"],
+    "logos": {
+      "small": "src/img/jobs_table_icon_small.png",
+      "large": "src/img/jobs_table_icon_large.png"
+    },
+    "links": [
+      {"name": "Project site", "url": "https://fifemon.fnal.gov"}
+    ],
+    "screenshots": [
+        {"name": "Active Jobs", "path": "src/img/active_jobs.png"},
+        {"name": "Completed Jobs", "path": "src/img/completed_jobs.png"},
+        {"name": "Active Jobs with custom filter", "path": "src/img/active_jobs_filtered.png"},
+        {"name": "Panel options", "path": "src/img/options.png"}
+    ],
+    "version": "0.1.0",
+    "updated": "2016-07-20"
+  },
+
+  "dependencies": {
+    "grafanaVersion": "3.x.x",
+    "plugins": [ ]
+  }
+}
