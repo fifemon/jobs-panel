@@ -111,8 +111,6 @@ System.register(['app/plugins/sdk', 'lodash', 'moment'], function (_export, _con
                     _this.templateSrv = templateSrv;
 
                     var panelDefaults = {
-                        index: "",
-                        query: "*",
                         mode: "Active", // "Active","Completed"
                         size: 100,
                         scroll: true,
@@ -152,7 +150,7 @@ System.register(['app/plugins/sdk', 'lodash', 'moment'], function (_export, _con
                     value: function issueQueries(datasource) {
                         this.updateTimeRange();
                         this.datasource = datasource;
-                        return datasource._post(this.panel.index + '/' + '_search', this.get_jobs_query()).then(function (res) {
+                        return datasource._post(datasource.indexPattern.getIndexForToday() + '/' + '_search', this.get_jobs_query()).then(function (res) {
                             return { data: res };
                         });
                     }
@@ -280,7 +278,10 @@ System.register(['app/plugins/sdk', 'lodash', 'moment'], function (_export, _con
                 }, {
                     key: 'get_jobs_query',
                     value: function get_jobs_query() {
-                        var q = this.templateSrv.replace(this.panel.query, this.panel.scopedVars);
+                        var q = '*';
+                        if (this.panel.targets[0].query) {
+                            q = this.templateSrv.replace(this.panel.targets[0].query, this.panel.scopedVars);
+                        }
                         if (this.filterQuery && this.filterQuery.name === '-- custom --') {
                             if (this.customQuery !== '') {
                                 q += ' AND (' + this.customQuery + ')';

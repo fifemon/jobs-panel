@@ -2,14 +2,6 @@
 	<div class="section gf-form-group">
 		<h5 class="section-heading">General</h5>
 		<div class="gf-form">
-			<span class="gf-form-label width-8">Index</span>
-			<input type="text" class="gf-form-input max-width-10" ng-model="ctrl.panel.index" ng-change="ctrl.refresh()" ng-model-onblur>
-		</div>
-		<div class="gf-form">
-			<span class="gf-form-label width-8">Query</span>
-			<input type="text" class="gf-form-input max-width-10" ng-model="ctrl.panel.query" ng-change="ctrl.refresh()" ng-model-onblur>
-		</div>
-		<div class="gf-form">
 			<span class="gf-form-label width-8">Mode</span>
 			<div class="gf-form-select-wrapper max-width-10">
 				<select class="gf-form-input" ng-model="ctrl.panel.mode" ng-options="v for v in ['Active','Completed','All']" ng-change="ctrl.refresh()"></select>

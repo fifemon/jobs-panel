@@ -22,8 +22,6 @@ export class JobsCtrl extends MetricsPanelCtrl {
     this.templateSrv = templateSrv;
 
     var panelDefaults = {
-        index: "",
-        query: "*",
         mode: "Active", // "Active","Completed"
         size: 100,
         scroll: true,
@@ -69,7 +67,7 @@ export class JobsCtrl extends MetricsPanelCtrl {
   issueQueries(datasource) {
       this.updateTimeRange();
       this.datasource=datasource;
-      return datasource._post(this.panel.index+'/'+'_search',this.get_jobs_query()).then(function(res) {
+      return datasource._post(datasource.indexPattern.getIndexForToday()+'/'+'_search',this.get_jobs_query()).then(function(res) {
           return {data: res};
       });
   }
@@ -189,7 +187,10 @@ export class JobsCtrl extends MetricsPanelCtrl {
   }
 
   get_jobs_query() {
-      var q = this.templateSrv.replace(this.panel.query, this.panel.scopedVars);
+      var q = '*';
+      if (this.panel.targets[0].query) {
+          q = this.templateSrv.replace(this.panel.targets[0].query, this.panel.scopedVars);
+      }
       if (this.filterQuery && this.filterQuery.name === '-- custom --') {
           if (this.customQuery !== '') {
               q += ' AND (' + this.customQuery + ')';
