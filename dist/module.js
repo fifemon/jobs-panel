@@ -144,6 +144,7 @@ System.register(['app/plugins/sdk', 'lodash', 'moment'], function (_export, _con
                     key: 'onInitEditMode',
                     value: function onInitEditMode() {
                         this.addEditorTab('Options', 'public/plugins/fifemon-jobs-panel/editor.html', 2);
+                        this.addEditorTab('Columns', 'public/plugins/fifemon-jobs-panel/editor_columns.html', 3);
                     }
                 }, {
                     key: 'issueQueries',
@@ -197,6 +198,16 @@ System.register(['app/plugins/sdk', 'lodash', 'moment'], function (_export, _con
                     key: 'removeQuery',
                     value: function removeQuery(name) {
                         _.remove(this.panel.queries, { 'name': name });
+                    }
+                }, {
+                    key: 'addColumn',
+                    value: function addColumn() {
+                        this.panel.columns.push({ name: '', field: '', format: 'string', title: '' });
+                    }
+                }, {
+                    key: 'removeColumn',
+                    value: function removeColumn(name) {
+                        _.remove(this.panel.columns, { 'name': name });
                     }
                 }, {
                     key: 'link',

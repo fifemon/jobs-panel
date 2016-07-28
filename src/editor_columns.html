@@ -1,0 +1,21 @@
+<div class="editor-row">
+	<div class="section gf-form-group">
+        <div class="gf-form" ng-repeat="col in ctrl.panel.columns">
+            <input type="test" class="gf-form-input width-15" ng-model="col.name" placeholder="name">
+            <input type="test" class="gf-form-input width-15" ng-model="col.field" placeholder="field">
+			<div class="gf-form-select-wrapper width-15">
+				<select class="gf-form-input" ng-model="col.format" ng-options="v for v in ['string','number','date','jobid']" ng-change="ctrl.refresh()"></select>
+			</div>
+            <input type="test" class="gf-form-input width-30" ng-model="col.title" placeholder="title">
+            <label class="gf-form-label">
+                <a class="pointer" ng-click="ctrl.removeColumn(col.name)"><i class="fa fa-trash"></i></a>
+            </label>
+        </div>
+    </div>
+    <div class="gf-form gf-form--offset-1">
+        <button class="btn btn-inverse gf-form-btn" ng-click="ctrl.addColumn()">
+            <i class="fa fa-plus"></i>&nbsp;
+            Add Column
+        </button>
+    </div>
+</div>

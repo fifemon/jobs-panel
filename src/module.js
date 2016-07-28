@@ -62,6 +62,7 @@ export class JobsCtrl extends MetricsPanelCtrl {
 
   onInitEditMode() {
     this.addEditorTab('Options', 'public/plugins/fifemon-jobs-panel/editor.html', 2);
+    this.addEditorTab('Columns', 'public/plugins/fifemon-jobs-panel/editor_columns.html', 3);
   }
 
   issueQueries(datasource) {
@@ -109,6 +110,14 @@ export class JobsCtrl extends MetricsPanelCtrl {
 
   removeQuery(name) {
       _.remove(this.panel.queries, {'name':name});
+  }
+
+  addColumn() {
+      this.panel.columns.push({name:'',field:'',format:'string',title:''});
+  }
+
+  removeColumn(name) {
+      _.remove(this.panel.columns, {'name':name});
   }
 
   link(scope, elem, attrs, ctrl) {
