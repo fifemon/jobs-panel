@@ -210,17 +210,17 @@ export class JobsCtrl extends MetricsPanelCtrl {
                           html += '<a style="text-decoration:underline;" href="dashboard/db/job-details?var-jobid='+data._source.jobid+'&from='+moment(data._source.submit_date).format('x')+'&to='+ctrl.rangeRaw.to+'">'+data._source.jobid+'</a>';
                           break;
                       case 'date':
-                          if ('dateFormat' in col) {
+                          if (col.dateFormat) {
                               html += moment(val).format(col.dateFormat);
                           } else {
                               html += moment(val).format('ddd MMM DD HH:mm ZZ');
                           }
                           break;
                       case 'number':
-                          if ('scale' in col) {
+                          if (col.scale) {
                               val = val * col.scale;
                           }
-                          if ('decimals' in col) {
+                          if (col.decimals) {
                               html += val.toFixed(col.decimals);
                           } else {
                               html += val.toFixed(0);
