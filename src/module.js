@@ -28,7 +28,7 @@ export class JobsCtrl extends MetricsPanelCtrl {
         sortOrder: 'asc',
         filterable: true,
         queries: [
-            {name: "-- custom --", query:""}
+            {name: "-- no filter --", query:""}
         ],
         columns: [
             {name: "Job ID", field: "jobid", format: 'jobid',
@@ -53,8 +53,8 @@ export class JobsCtrl extends MetricsPanelCtrl {
     this.docs = 0;
     this.docsMissing = 0;
     this.docsTotal = 0;
-    this.filterQuery = {name: "all jobs",query:""};
-    this.customQuery = "";
+    this.selectedFilter = this.panel.queries[0];
+    this.filterQuery = this.selectedFilter.query;
 
     this.events.on('data-received', this.onDataReceived.bind(this));
     this.events.on('init-edit-mode', this.onInitEditMode.bind(this));
@@ -102,10 +102,13 @@ export class JobsCtrl extends MetricsPanelCtrl {
       this.refresh();
   }
 
+  updateFilter() {
+      this.filterQuery = this.selectedFilter.query;
+      this.refresh();
+  }
+
   addQuery() {
-      var custom = this.panel.queries.pop();
-      this.panel.queries.push({name:'new query',query:''});
-      this.panel.queries.push(custom);
+      this.panel.queries.push({name:'',query:''});
   }
 
   removeQuery(index) {
@@ -240,12 +243,8 @@ export class JobsCtrl extends MetricsPanelCtrl {
       if (this.panel.targets[0].query) {
           q = this.templateSrv.replace(this.panel.targets[0].query, this.panel.scopedVars);
       }
-      if (this.filterQuery && this.filterQuery.name === '-- custom --') {
-          if (this.customQuery !== '') {
-              q += ' AND (' + this.customQuery + ')';
-          }
-      } else if (this.filterQuery && this.filterQuery.query !== '') {
-          q += ' AND (' + this.filterQuery.query + ')';
+      if (this.filterQuery !== '') {
+          q += ' AND (' + this.filterQuery + ')';
       }
 
       var from = this.rangeRaw.from;

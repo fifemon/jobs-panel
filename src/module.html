@@ -14,15 +14,14 @@
     <div class="gf-form">
         <label class="gf-form-label query-keyword">Filter</label>
         <div class="gf-form-select-wrapper">
-            <select class="gf-form-input" ng-model="ctrl.filterQuery" ng-change="ctrl.refresh()"
+            <select class="gf-form-input" ng-model="ctrl.selectedFilter" ng-change="ctrl.updateFilter()"
                 ng-options="query.name for query in ctrl.panel.queries">
-                <option value="">-- no filter --</option>
             </select>
         </div>
     </div>
-    <div class="gf-form gf-form--grow" ng-if="ctrl.filterQuery.name === '-- custom --'">
+    <div class="gf-form gf-form--grow">
         <input type="text" class="gf-form-input" placeholder="query"
-            ng-model="ctrl.customQuery" ng-change="ctrl.refresh()"
+            ng-model="ctrl.filterQuery" ng-change="ctrl.refresh()"
             ng-model-options="{updateOn: 'default blur', debounce: {default: 500, blur: 0} }"/>
         <label class="gf-form-label width-10"><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax">Query syntax<i class="fa fa-fw fa-external-link"></i></a></label>
     </div>

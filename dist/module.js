@@ -116,7 +116,7 @@ System.register(['app/plugins/sdk', 'lodash', 'moment'], function (_export, _con
                         sortField: 'submit_date',
                         sortOrder: 'asc',
                         filterable: true,
-                        queries: [{ name: "-- custom --", query: "" }],
+                        queries: [{ name: "-- no filter --", query: "" }],
                         columns: [{ name: "Job ID", field: "jobid", format: 'jobid',
                             title: "JobSub job ID" }, { name: "Status", field: "status", format: 'string',
                             title: "Job Status (1=idle,2=running,5=held)" }, { name: "Submit Time", field: "submit_date", format: 'date',
@@ -132,8 +132,8 @@ System.register(['app/plugins/sdk', 'lodash', 'moment'], function (_export, _con
                     _this.docs = 0;
                     _this.docsMissing = 0;
                     _this.docsTotal = 0;
-                    _this.filterQuery = { name: "all jobs", query: "" };
-                    _this.customQuery = "";
+                    _this.selectedFilter = _this.panel.queries[0];
+                    _this.filterQuery = _this.selectedFilter.query;
 
                     _this.events.on('data-received', _this.onDataReceived.bind(_this));
                     _this.events.on('init-edit-mode', _this.onInitEditMode.bind(_this));
@@ -188,11 +188,15 @@ System.register(['app/plugins/sdk', 'lodash', 'moment'], function (_export, _con
                         this.refresh();
                     }
                 }, {
+                    key: 'updateFilter',
+                    value: function updateFilter() {
+                        this.filterQuery = this.selectedFilter.query;
+                        this.refresh();
+                    }
+                }, {
                     key: 'addQuery',
                     value: function addQuery() {
-                        var custom = this.panel.queries.pop();
-                        this.panel.queries.push({ name: 'new query', query: '' });
-                        this.panel.queries.push(custom);
+                        this.panel.queries.push({ name: '', query: '' });
                     }
                 }, {
                     key: 'removeQuery',
@@ -337,12 +341,8 @@ System.register(['app/plugins/sdk', 'lodash', 'moment'], function (_export, _con
                         if (this.panel.targets[0].query) {
                             q = this.templateSrv.replace(this.panel.targets[0].query, this.panel.scopedVars);
                         }
-                        if (this.filterQuery && this.filterQuery.name === '-- custom --') {
-                            if (this.customQuery !== '') {
-                                q += ' AND (' + this.customQuery + ')';
-                            }
-                        } else if (this.filterQuery && this.filterQuery.query !== '') {
-                            q += ' AND (' + this.filterQuery.query + ')';
+                        if (this.filterQuery !== '') {
+                            q += ' AND (' + this.filterQuery + ')';
                         }
 
                         var from = this.rangeRaw.from;
