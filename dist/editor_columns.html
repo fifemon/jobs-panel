@@ -32,6 +32,7 @@
                 </ul>
                 <div class="clearfix"></div>
             </div>
+
             <div class="tight-form" ng-if="col.format==='number'">
                 <ul class="tight-form-list">
                     <li class="tight-form-item text-right" style="width: 93px">Decimals</li>
@@ -42,6 +43,17 @@
                     <li>
                         <input type="text" class="input-small tight-form-input" ng-model="col.scale" placeholder="1" ng-change="ctrl.refresh()">
                     </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="tight-form" ng-if="col.format==='date'">
+                <ul class="tight-form-list">
+                    <li class="tight-form-item text-right" style="width: 93px">Date Format</li>
+                    <li>
+                        <input type="text" class="input-large tight-form-input" ng-model="col.dateFormat" placeholder="ddd MMM DD HH:mm ZZ" ng-change="ctrl.refresh()">
+                    </li>
+                    <li class="tight-form-item""><a href="http://momentjs.com/docs/#/displaying/format/" target="_new">formats<i class="fa fa-fw fa-external-link"></i></a></li>
                 </ul>
                 <div class="clearfix"></div>
             </div>

@@ -296,10 +296,6 @@ System.register(['app/plugins/sdk', 'lodash', 'moment'], function (_export, _con
                         function renderActiveRow(data) {
                             var addWidthHack = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
 
-                            function formatDate(date) {
-                                return moment(date).format('ddd MMM DD HH:mm ZZ');
-                            }
-
                             var html = '<tr>';
 
                             for (var i = 0; i < panel.columns.length; i++) {
@@ -312,7 +308,11 @@ System.register(['app/plugins/sdk', 'lodash', 'moment'], function (_export, _con
                                             html += '<a style="text-decoration:underline;" href="dashboard/db/job-details?var-jobid=' + data._source.jobid + '&from=' + moment(data._source.submit_date).format('x') + '&to=' + ctrl.rangeRaw.to + '">' + data._source.jobid + '</a>';
                                             break;
                                         case 'date':
-                                            html += formatDate(val);
+                                            if ('dateFormat' in col) {
+                                                html += moment(val).format(col.dateFormat);
+                                            } else {
+                                                html += moment(val).format('ddd MMM DD HH:mm ZZ');
+                                            }
                                             break;
                                         case 'number':
                                             if ('scale' in col) {

@@ -198,10 +198,6 @@ export class JobsCtrl extends MetricsPanelCtrl {
       }
 
       function renderActiveRow(data, addWidthHack = false) {
-          function formatDate(date) {
-              return  moment(date).format('ddd MMM DD HH:mm ZZ');
-          }
-
           var html = '<tr>';
 
           for (var i = 0; i < panel.columns.length; i++) {
@@ -214,7 +210,11 @@ export class JobsCtrl extends MetricsPanelCtrl {
                           html += '<a style="text-decoration:underline;" href="dashboard/db/job-details?var-jobid='+data._source.jobid+'&from='+moment(data._source.submit_date).format('x')+'&to='+ctrl.rangeRaw.to+'">'+data._source.jobid+'</a>';
                           break;
                       case 'date':
-                          html += formatDate(val);
+                          if ('dateFormat' in col) {
+                              html += moment(val).format(col.dateFormat);
+                          } else {
+                              html += moment(val).format('ddd MMM DD HH:mm ZZ');
+                          }
                           break;
                       case 'number':
                           if ('scale' in col) {
