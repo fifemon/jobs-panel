@@ -301,15 +301,23 @@ System.register(['app/plugins/sdk', 'lodash', 'moment'], function (_export, _con
                             for (var i = 0; i < panel.columns.length; i++) {
                                 html += '<td>';
                                 var col = panel.columns[i];
-                                switch (col.format) {
-                                    case 'jobid':
-                                        html += '<a style="text-decoration:underline;" href="dashboard/db/job-details?var-jobid=' + data._source.jobid + '&from=' + moment(data._source.submit_date).format('x') + '&to=' + ctrl.rangeRaw.to + '">' + data._source.jobid + '</a>';
-                                        break;
-                                    case 'date':
-                                        html += formatDate(data._source[col.field]);
-                                        break;
-                                    default:
-                                        html += data._source[col.field];
+                                if (col.field in data._source) {
+                                    var val = data._source[col.field];
+                                    switch (col.format) {
+                                        case 'jobid':
+                                            html += '<a style="text-decoration:underline;" href="dashboard/db/job-details?var-jobid=' + data._source.jobid + '&from=' + moment(data._source.submit_date).format('x') + '&to=' + ctrl.rangeRaw.to + '">' + data._source.jobid + '</a>';
+                                            break;
+                                        case 'date':
+                                            html += formatDate(val);
+                                            break;
+                                        case 'number':
+                                            html += val;
+                                            break;
+                                        default:
+                                            html += val;
+                                    }
+                                } else {
+                                    html += '&mdash;';
                                 }
                                 // because of the fixed table headers css only solution
                                 // there is an issue if header cell is wider the cell
