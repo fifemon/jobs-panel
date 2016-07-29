@@ -111,7 +111,6 @@ System.register(['app/plugins/sdk', 'lodash', 'moment'], function (_export, _con
                     _this.templateSrv = templateSrv;
 
                     var panelDefaults = {
-                        mode: "Active", // "Active","Completed"
                         size: 100,
                         scroll: true,
                         sortField: 'submit_date',
@@ -303,13 +302,6 @@ System.register(['app/plugins/sdk', 'lodash', 'moment'], function (_export, _con
 
                         var from = this.rangeRaw.from;
                         var to = this.rangeRaw.to;
-                        // time range hack; really should have separate indices for active and completed jobs
-                        if (this.panel.mode === 'Active') {
-                            from = 'now-10m';
-                            to = 'now';
-                        } else if (this.panel.mode === 'Completed' && to === 'now') {
-                            to = 'now-10m';
-                        }
 
                         var sort = {};
                         sort[this.panel.sortField] = this.panel.sortOrder;
@@ -317,16 +309,9 @@ System.register(['app/plugins/sdk', 'lodash', 'moment'], function (_export, _con
                         var data = {
                             "size": this.panel.size,
                             "query": {
-                                "filtered": {
-                                    "query": {
-                                        "query_string": {
-                                            "query": q,
-                                            "lowercase_expanded_terms": false
-                                        }
-                                    },
-                                    "filter": {
-                                        "range": { "timestamp": { "gte": from, "lte": to } }
-                                    }
+                                "query_string": {
+                                    "query": q,
+                                    "lowercase_expanded_terms": false
                                 }
                             },
                             "sort": [sort, "_score"]
