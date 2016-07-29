@@ -26,6 +26,7 @@ export class JobsCtrl extends MetricsPanelCtrl {
         scroll: true,
         sortField: 'submit_date',
         sortOrder: 'asc',
+        filterable: true,
         queries: [
             {name: "-- custom --", query:""}
         ],

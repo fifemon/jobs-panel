@@ -115,6 +115,7 @@ System.register(['app/plugins/sdk', 'lodash', 'moment'], function (_export, _con
                         scroll: true,
                         sortField: 'submit_date',
                         sortOrder: 'asc',
+                        filterable: true,
                         queries: [{ name: "-- custom --", query: "" }],
                         columns: [{ name: "Job ID", field: "jobid", format: 'jobid',
                             title: "JobSub job ID" }, { name: "Status", field: "status", format: 'string',
