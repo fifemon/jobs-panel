@@ -108,16 +108,56 @@ export class JobsCtrl extends MetricsPanelCtrl {
       this.panel.queries.push(custom);
   }
 
-  removeQuery(name) {
-      _.remove(this.panel.queries, {'name':name});
+  removeQuery(index) {
+      if (this.panel.queries.length > index) {
+          this.panel.queries.splice(index,1);
+      }
+  }
+
+  moveQueryUp(index) {
+      if (this.panel.queries.length > index && index > 0) {
+          var tmp = this.panel.queries[index];
+          this.panel.queries[index]=this.panel.queries[index-1];
+          this.panel.queries[index-1]=tmp;
+      }
+  }
+
+  moveQueryDown(index) {
+      if (this.panel.queries.length > index-1 && index >= 0) {
+          var tmp = this.panel.queries[index];
+          this.panel.queries[index]=this.panel.queries[index+1];
+          this.panel.queries[index+1]=tmp;
+      }
   }
 
   addColumn() {
       this.panel.columns.push({name:'',field:'',format:'string',title:''});
+      this.refresh();
   }
 
-  removeColumn(name) {
-      _.remove(this.panel.columns, {'name':name});
+  removeColumn(index) {
+      if (this.panel.columns.length > index) {
+          this.panel.columns.splice(index,1);
+      }
+      this.refresh();
+  }
+
+  moveColumnUp(index) {
+      if (this.panel.columns.length > index && index > 0) {
+          var tmp = this.panel.columns[index];
+          this.panel.columns[index]=this.panel.columns[index-1];
+          this.panel.columns[index-1]=tmp;
+      }
+      this.refresh();
+  }
+
+  moveColumnDown(index) {
+      if (this.panel.columns.length > index-1 && index >= 0) {
+          var tmp = this.panel.columns[index];
+          this.panel.columns[index]=this.panel.columns[index+1];
+          this.panel.columns[index+1]=tmp;
+      }
+      this.refresh();
   }
 
   link(scope, elem, attrs, ctrl) {

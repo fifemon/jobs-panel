@@ -196,18 +196,62 @@ System.register(['app/plugins/sdk', 'lodash', 'moment'], function (_export, _con
                     }
                 }, {
                     key: 'removeQuery',
-                    value: function removeQuery(name) {
-                        _.remove(this.panel.queries, { 'name': name });
+                    value: function removeQuery(index) {
+                        if (this.panel.queries.length > index) {
+                            this.panel.queries.splice(index, 1);
+                        }
+                    }
+                }, {
+                    key: 'moveQueryUp',
+                    value: function moveQueryUp(index) {
+                        if (this.panel.queries.length > index && index > 0) {
+                            var tmp = this.panel.queries[index];
+                            this.panel.queries[index] = this.panel.queries[index - 1];
+                            this.panel.queries[index - 1] = tmp;
+                        }
+                    }
+                }, {
+                    key: 'moveQueryDown',
+                    value: function moveQueryDown(index) {
+                        if (this.panel.queries.length > index - 1 && index >= 0) {
+                            var tmp = this.panel.queries[index];
+                            this.panel.queries[index] = this.panel.queries[index + 1];
+                            this.panel.queries[index + 1] = tmp;
+                        }
                     }
                 }, {
                     key: 'addColumn',
                     value: function addColumn() {
                         this.panel.columns.push({ name: '', field: '', format: 'string', title: '' });
+                        this.refresh();
                     }
                 }, {
                     key: 'removeColumn',
-                    value: function removeColumn(name) {
-                        _.remove(this.panel.columns, { 'name': name });
+                    value: function removeColumn(index) {
+                        if (this.panel.columns.length > index) {
+                            this.panel.columns.splice(index, 1);
+                        }
+                        this.refresh();
+                    }
+                }, {
+                    key: 'moveColumnUp',
+                    value: function moveColumnUp(index) {
+                        if (this.panel.columns.length > index && index > 0) {
+                            var tmp = this.panel.columns[index];
+                            this.panel.columns[index] = this.panel.columns[index - 1];
+                            this.panel.columns[index - 1] = tmp;
+                        }
+                        this.refresh();
+                    }
+                }, {
+                    key: 'moveColumnDown',
+                    value: function moveColumnDown(index) {
+                        if (this.panel.columns.length > index - 1 && index >= 0) {
+                            var tmp = this.panel.columns[index];
+                            this.panel.columns[index] = this.panel.columns[index + 1];
+                            this.panel.columns[index + 1] = tmp;
+                        }
+                        this.refresh();
                     }
                 }, {
                     key: 'link',

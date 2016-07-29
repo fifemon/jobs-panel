@@ -1,15 +1,27 @@
 <div class="editor-row">
 	<div class="section gf-form-group">
+        <div class="gf-form">
+            <label class="gf-form-label width-15">Name</label>
+            <label class="gf-form-label width-15">Field</label>
+            <label class="gf-form-label width-10">Format</label>
+            <label class="gf-form-label width-30">Title</label>
+        </div>
         <div class="gf-form" ng-repeat="col in ctrl.panel.columns">
             <input type="test" class="gf-form-input width-15" ng-model="col.name" placeholder="name">
             <input type="test" class="gf-form-input width-15" ng-model="col.field" placeholder="field">
-			<div class="gf-form-select-wrapper width-15">
+			<div class="gf-form-select-wrapper width-10">
 				<select class="gf-form-input" ng-model="col.format" ng-options="v for v in ['string','number','date','jobid']" ng-change="ctrl.refresh()"></select>
 			</div>
             <input type="test" class="gf-form-input width-30" ng-model="col.title" placeholder="title">
-            <label class="gf-form-label">
-                <a class="pointer" ng-click="ctrl.removeColumn(col.name)"><i class="fa fa-trash"></i></a>
-            </label>
+            <button class="btn btn-inverse btn-mini" ng-click="ctrl.removeColumn($index)">
+                <i class="fa fa-trash"></i>
+            </button>
+            <button class="btn btn-inverse btn-mini" ng-hide="$first" ng-click="ctrl.moveColumnUp($index)">
+                <i class="fa fa-arrow-up"></i>
+            </button>
+            <button class="btn btn-inverse btn-mini" ng-hide="$last" ng-click="ctrl.moveColumnDown($index)">
+                <i class="fa fa-arrow-down"></i>
+            </button>
         </div>
     </div>
     <div class="gf-form gf-form--offset-1">

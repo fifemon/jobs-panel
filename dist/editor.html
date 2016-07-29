@@ -18,11 +18,17 @@
 	<div class="section gf-form-group">
 		<h5 class="section-heading">Filter Queries</h5>
         <div class="gf-form" ng-repeat="query in ctrl.panel.queries">
-            <input type="test" class="gf-form-input width-15" ng-model="query.name">
-            <input type="test" class="gf-form-input width-30" ng-model="query.query">
-            <label class="gf-form-label">
-                <a class="pointer" ng-click="ctrl.removeQuery(query.name)"><i class="fa fa-trash"></i></a>
-            </label>
+            <input type="test" class="gf-form-input width-15" ng-model="query.name" placeholder="name">
+            <input type="test" class="gf-form-input width-30" ng-model="query.query" placeholder="query">
+            <button class="btn btn-inverse btn-mini" ng-click="ctrl.removeQuery($index)">
+                <i class="fa fa-trash"></i>
+            </button>
+            <button class="btn btn-inverse btn-mini" ng-hide="$first" ng-click="ctrl.moveQueryUp($index)">
+                <i class="fa fa-arrow-up"></i>
+            </button>
+            <button class="btn btn-inverse btn-mini" ng-hide="$last" ng-click="ctrl.moveQueryDown($index)">
+                <i class="fa fa-arrow-down"></i>
+            </button>
         </div>
     </div>
     <div class="gf-form gf-form--offset-1">
