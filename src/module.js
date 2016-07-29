@@ -38,12 +38,16 @@ export class JobsCtrl extends MetricsPanelCtrl {
             {name: "Submit Time", field: "submit_date", format: 'date',
                 title: "Time job was sumbitted"},
             {name: "Memory (MB)", field: "ResidentSetSize_RAW", format: 'number',
+                decimals: 2, scale: 1,
                 title: "Max used and requested memory"},
             {name: "Disk (MB)",field: "DiskUsage_RAW", format: 'number',
+                decimals: 2, scale: 1,
                 title: "Max used and requested disk"},
             {name: "Time (hr)",field: "walltime", format: 'number',
+                decimals: 2, scale: 1,
                 title: "Max used and requested walltime"},
             {name: "Efficiency", field: "efficiency", format: 'number',
+                decimals: 2, scale: 1,
                 title: "CPU efficiency (CPU time / walltime)"}
         ]
     };
@@ -213,7 +217,14 @@ export class JobsCtrl extends MetricsPanelCtrl {
                           html += formatDate(val);
                           break;
                       case 'number':
-                          html += val;
+                          if ('scale' in col) {
+                              val = val * col.scale;
+                          }
+                          if ('decimals' in col) {
+                              html += val.toFixed(col.decimals);
+                          } else {
+                              html += val.toFixed(0);
+                          }
                           break;
                       default:
                           html += val;

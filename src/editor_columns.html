@@ -1,27 +1,50 @@
 <div class="editor-row">
-	<div class="section gf-form-group">
-        <div class="gf-form">
-            <label class="gf-form-label width-15">Name</label>
-            <label class="gf-form-label width-15">Field</label>
-            <label class="gf-form-label width-10">Format</label>
-            <label class="gf-form-label width-30">Title</label>
-        </div>
-        <div class="gf-form" ng-repeat="col in ctrl.panel.columns">
-            <input type="test" class="gf-form-input width-15" ng-model="col.name" placeholder="name">
-            <input type="test" class="gf-form-input width-15" ng-model="col.field" placeholder="field">
-			<div class="gf-form-select-wrapper width-10">
-				<select class="gf-form-input" ng-model="col.format" ng-options="v for v in ['string','number','date','jobid']" ng-change="ctrl.refresh()"></select>
-			</div>
-            <input type="test" class="gf-form-input width-30" ng-model="col.title" placeholder="title">
-            <button class="btn btn-inverse btn-mini" ng-click="ctrl.removeColumn($index)">
-                <i class="fa fa-trash"></i>
-            </button>
-            <button class="btn btn-inverse btn-mini" ng-hide="$first" ng-click="ctrl.moveColumnUp($index)">
-                <i class="fa fa-arrow-up"></i>
-            </button>
-            <button class="btn btn-inverse btn-mini" ng-hide="$last" ng-click="ctrl.moveColumnDown($index)">
-                <i class="fa fa-arrow-down"></i>
-            </button>
+	<div class="tight-form-container">
+        <div ng-repeat="col in ctrl.panel.columns">
+            <div class="tight-form">
+                <ul class="tight-form-list pull-right">
+                    <li class="tight-form-item">
+                        <i class="fa fa-arrow-up pointer" ng-hide="$first" ng-click="ctrl.moveColumnUp($index)"></i>
+                        <i class="fa fa-arrow-down pointer" ng-hide="$last" ng-click="ctrl.moveColumnDown($index)"></i>
+                        <i class="fa fa-trash pointer" ng-click="ctrl.removeColumn($index)"></i>
+                    </li>
+                </ul>
+                <ul class="tight-form-list">
+                    <li class="tight-form-item"><strong>Name</strong></li>
+                    <li>
+                        <input type="text" class="input-medium tight-form-input" ng-model="col.name" placeholder="name" ng-change="ctrl.refresh()">
+                    </li>
+                    <li class="tight-form-item">Field</li>
+                    <li>
+                        <input type="text" class="input-medium tight-form-input" ng-model="col.field" placeholder="field" ng-change="ctrl.refresh()">
+                    </li>
+                    <li class="tight-form-item">Title</li>
+                    <li>
+                        <input type="text" class="input-large tight-form-input" ng-model="col.title" placeholder="title" ng-change="ctrl.refresh()">
+                    </li>
+                    <li class="tight-form-item">Format</li>
+                    <li>
+                        <select class="gf-form-input" 
+                            ng-model="col.format" 
+                            ng-options="v for v in ['string','number','date','jobid']" 
+                            ng-change="ctrl.refresh()"></select>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="tight-form" ng-if="col.format==='number'">
+                <ul class="tight-form-list">
+                    <li class="tight-form-item text-right" style="width: 93px">Decimals</li>
+                    <li>
+                        <input type="text" class="input-small tight-form-input" ng-model="col.decimals" placeholder="0" ng-change="ctrl.refresh()">
+                    </li>
+                    <li class="tight-form-item">Scale</li>
+                    <li>
+                        <input type="text" class="input-small tight-form-input" ng-model="col.scale" placeholder="1" ng-change="ctrl.refresh()">
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
         </div>
     </div>
     <div class="gf-form gf-form--offset-1">
