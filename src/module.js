@@ -72,15 +72,16 @@ export class JobsCtrl extends MetricsPanelCtrl {
   issueQueries(datasource) {
       this.updateTimeRange();
       this.datasource=datasource;
-      return datasource._post(datasource.indexPattern.getIndexForToday()+'/'+'_search',this.get_jobs_query()).then(function(res) {
+      return datasource._post('_msearch','{"index":"'+datasource.indexPattern.getIndexForToday()+'"}\n'+JSON.stringify(this.get_jobs_query())+'\n\n').then(function(res) {
           return {data: res};
       });
   }
 
   onDataReceived(data) {
       if (data) {
-          this.data = data.hits.hits;
-          this.docsTotal = data.hits.total;
+          var response = data.responses[0];
+          this.data = response.hits.hits;
+          this.docsTotal = response.hits.total;
           this.docs = this.data.length;
           this.docsMissing = this.docsTotal - this.docs;
       } else {
